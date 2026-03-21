@@ -15,7 +15,7 @@ export function registerAnalyticsTools(server: McpServer, client: HimetricaClien
     { ...dateParams },
     async (params) => {
       const data = await client.getAnalytics(params);
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 
@@ -28,7 +28,7 @@ export function registerAnalyticsTools(server: McpServer, client: HimetricaClien
     },
     async (params) => {
       const data = await client.getTimeseries(params);
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 
@@ -38,7 +38,7 @@ export function registerAnalyticsTools(server: McpServer, client: HimetricaClien
     {},
     async () => {
       const data = await client.getRealtime();
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 }

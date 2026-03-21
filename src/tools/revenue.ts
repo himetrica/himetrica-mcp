@@ -9,7 +9,7 @@ export function registerRevenueTools(server: McpServer, client: HimetricaClient)
     {},
     async () => {
       const data = await client.getRevenue();
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 
@@ -21,7 +21,7 @@ export function registerRevenueTools(server: McpServer, client: HimetricaClient)
     },
     async (params) => {
       const data = await client.getRevenueTimeseries(params);
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 
@@ -34,7 +34,7 @@ export function registerRevenueTools(server: McpServer, client: HimetricaClient)
     },
     async (params) => {
       const data = await client.getTopCustomers(params);
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 }

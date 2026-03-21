@@ -11,7 +11,7 @@ import { registerChannelsTools } from "./tools/channels.js";
 export function createServer(client: HimetricaClient): McpServer {
   const server = new McpServer({
     name: "himetrica",
-    version: "0.1.0",
+    version: "0.2.0",
   });
 
   registerAnalyticsTools(server, client);

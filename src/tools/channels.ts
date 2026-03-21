@@ -13,7 +13,7 @@ export function registerChannelsTools(server: McpServer, client: HimetricaClient
     },
     async (params) => {
       const data = await client.getChannelROI(params);
-      return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify(data) }] };
     },
   );
 }
