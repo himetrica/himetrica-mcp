@@ -1,4 +1,4 @@
-const DEFAULT_API_URL = "https://api.himetrica.com";
+const DEFAULT_API_URL = "https://app.himetrica.com";
 
 /**
  * HTTP client for the Himetrica Public API (/api/v1/).
