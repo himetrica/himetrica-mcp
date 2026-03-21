@@ -5,11 +5,21 @@ MCP server for [Himetrica](https://himetrica.com) — query your analytics from 
 ## Setup
 
 You need:
-- **Node.js 18+**
 - A Himetrica **secret key** (`hm_sk_...`) from Project Settings
 - A **Starter plan** or above
 
-### Claude Desktop
+### Remote (recommended)
+
+No install needed — connects directly to Himetrica's servers.
+
+#### Claude Code
+
+```bash
+claude mcp add himetrica https://app.himetrica.com/api/v1/mcp \
+  --transport http --header "X-API-Key: hm_sk_..."
+```
+
+#### Claude Desktop
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
@@ -17,23 +27,16 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 {
   "mcpServers": {
     "himetrica": {
-      "command": "npx",
-      "args": ["@himetrica/mcp-server"],
-      "env": {
-        "HIMETRICA_SECRET_KEY": "hm_sk_..."
+      "url": "https://app.himetrica.com/api/v1/mcp",
+      "headers": {
+        "X-API-Key": "hm_sk_..."
       }
     }
   }
 }
 ```
 
-### Claude Code
-
-```bash
-claude mcp add himetrica -e HIMETRICA_SECRET_KEY=hm_sk_... -- npx @himetrica/mcp-server
-```
-
-### Cursor
+#### Cursor
 
 Add to `.cursor/mcp.json` in your project:
 
@@ -41,14 +44,21 @@ Add to `.cursor/mcp.json` in your project:
 {
   "mcpServers": {
     "himetrica": {
-      "command": "npx",
-      "args": ["@himetrica/mcp-server"],
-      "env": {
-        "HIMETRICA_SECRET_KEY": "hm_sk_..."
+      "url": "https://app.himetrica.com/api/v1/mcp",
+      "headers": {
+        "X-API-Key": "hm_sk_..."
       }
     }
   }
 }
+```
+
+### Local (via npx)
+
+Alternatively, run the MCP server locally. Requires **Node.js 18+**.
+
+```bash
+claude mcp add himetrica -e HIMETRICA_SECRET_KEY=hm_sk_... -- npx @himetrica/mcp-server
 ```
 
 ## Available Tools
@@ -80,16 +90,11 @@ All tools accept optional `startDate` and `endDate` parameters (ISO 8601). Your 
 - "Who are my top customers?"
 - "How is revenue trending over the last 90 days?"
 
-## Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `HIMETRICA_SECRET_KEY` | Yes | Your project secret key (`hm_sk_...`) |
-| `HIMETRICA_API_URL` | No | API URL override (defaults to `https://api.himetrica.com`) |
-
 ## How It Works
 
-The MCP server runs locally on your machine. When your AI assistant needs analytics data, it calls the server via stdin/stdout. The server queries the [Himetrica Read API](https://himetrica.com/docs/read-api) and returns the results. No data is stored — it's a passthrough.
+The remote MCP server runs on Himetrica's infrastructure. When your AI assistant needs analytics data, it sends a request to `https://app.himetrica.com/api/v1/mcp` and gets results back. No data is stored — it queries your analytics in real time.
+
+The local version (`npx @himetrica/mcp-server`) runs on your machine and calls the [Himetrica Read API](https://himetrica.com/docs/read-api) over HTTP.
 
 ## License
 
