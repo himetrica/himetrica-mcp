@@ -119,4 +119,12 @@ export class HimetricaClient {
   async getChannelSummary(params?: { startDate?: string; endDate?: string }) {
     return this.request("/channels/summary", params);
   }
+
+  async getVisitors(params?: { search?: string; country?: string; device?: string; source?: string; identifiedOnly?: string; sortBy?: string; sortOrder?: string; limit?: string; startDate?: string; endDate?: string }) {
+    return this.request("/visitors", params);
+  }
+
+  async getVisitor(visitorId: string) {
+    return this.request(`/visitors/${visitorId}`);
+  }
 }
